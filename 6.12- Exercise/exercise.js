@@ -1,8 +1,11 @@
-getCustomer(1)
-  .then(customer => getTopMovies(customer))
-  .then(moviesCustomer => sendEmail(moviesCustomer.customer.email, moviesCustomer.movies))
-  .then(() => console.log('Email sent...'));
-
+(async function f(){
+  const customer = await getCustomer(1);
+  console.log('Customer: ', customer);
+  const movies = await getTopMovies(customer);
+  console.log('Top movies: ', movies);
+  await sendEmail(customer.email,movies);
+  console.log('Email sent...')
+})();
 
 
 function getCustomer(id) {
@@ -18,21 +21,15 @@ function getCustomer(id) {
 });
 }
 
-
-
 function getTopMovies(customer) {
-  console.log('Customer: ', customer);
   return new Promise ((resolve, reject) => {
     setTimeout(() => {
-    resolve ({
-      customer: customer,
-      movies: ['movie1', 'movie2']});
+    resolve (['movie1', 'movie2']);
   }, 4000);
 });
 }
 
-function sendEmail(email,movies) {
-  console.log('Top movies: ', movies);
+function sendEmail(email,movies) {  
   return new Promise((resolve, reject) => {
     setTimeout(() => {
     resolve();
