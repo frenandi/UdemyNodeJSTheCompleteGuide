@@ -4,9 +4,8 @@ getCustomer(1, (customer) => {
   if (customer.isGold) {
     getTopMovies((movies) => {
       console.log('Top movies: ', movies);
-      sendEmail(customer.email, movies, () => {
-        console.log('Email sent...')
-      });
+      sendEmail(customer.email, movies).then(
+        console.log('Email sent...'));
     });
   }
 });
@@ -28,8 +27,10 @@ function getTopMovies(callback) {
   }, 4000);
 }
 
-function sendEmail(email, movies, callback) {
-  setTimeout(() => {
-    callback();
+function sendEmail(email, movies) {
+  return new Promise((resolve, reject) => {
+    setTimeout(() => {
+    resolve();
   }, 4000);
+  });
 }
